@@ -6,6 +6,7 @@ import (
 
 func SetupRoutes(app *fiber.App) {
   apiV1 := app.Group("/api/v1")
+
   handlePatientRoutes(apiV1)
 }
 

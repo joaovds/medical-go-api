@@ -2,9 +2,9 @@ package configs
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/joaovds/first-go-api/internal/configs/middlewares"
+	"github.com/joaovds/first-go-api/internal/infra/fiber/middlewares"
 
-  "github.com/joaovds/first-go-api/internal/configs/routes"
+  "github.com/joaovds/first-go-api/internal/infra/fiber/routes"
 )
 
 func GetApp() *fiber.App {
