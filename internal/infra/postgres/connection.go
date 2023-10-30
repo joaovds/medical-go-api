@@ -16,14 +16,12 @@ func GetConnection() (*sql.DB, error) {
   var err error
   var db *sql.DB
 
-  once.Do(func() {
-    db, err := sql.Open("postgres", "user=root dbname=medicalapi password=root sslmode=disable")
-    if err != nil {
-      panic(err)
-    }
+  db, err = sql.Open("postgres", "host=localhost port=5432 user=root dbname=medicalapi password=root sslmode=disable")
+  if err != nil {
+    panic(err)
+  }
 
-    err = db.Ping()
-  })
+  err = db.Ping()
 
   return db, err
 }
