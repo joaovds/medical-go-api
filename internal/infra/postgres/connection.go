@@ -3,6 +3,8 @@ package postgres
 import (
 	"database/sql"
 	"sync"
+  
+  _ "github.com/lib/pq"
 )
 
 var (
