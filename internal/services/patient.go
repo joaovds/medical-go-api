@@ -21,7 +21,7 @@ func GetAllPatients() ([]entities.Patient, error) {
   defer patientsRows.Close()
   defer db.Close()
 
-  var patients []entities.Patient
+  var patients []entities.Patient = []entities.Patient{}
 
   for patientsRows.Next() {
     var patient entities.Patient
