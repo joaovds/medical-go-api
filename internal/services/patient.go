@@ -1,6 +1,7 @@
 package patient_services
 
 import (
+	"database/sql"
 	"log"
 
 	"github.com/joaovds/first-go-api/internal/entities"
@@ -19,7 +20,7 @@ func GetAllPatients() ([]entities.Patient, error) {
     return nil, err
   }
   defer patientsRows.Close()
-  defer db.Close()
+  defer db.Close() 
 
   var patients []entities.Patient = []entities.Patient{}
 
@@ -41,5 +42,33 @@ func GetAllPatients() ([]entities.Patient, error) {
   }
 
   return patients, nil
+}
+
+func GetPatientById(patientId string) (*entities.Patient, error) {
+  db, err := postgres.GetConnection()
+  if err != nil {
+    return &entities.Patient{}, err
+  }
+
+  patientRow := db.QueryRow(queries.GetPatientById, patientId)
+  defer db.Close() 
+
+  patient := new(entities.Patient)
+
+  err = patientRow.Scan(
+    &patient.Id,
+    &patient.Name,
+    &patient.Email,
+    &patient.Document,
+    &patient.DateOfBirth,
+    )
+  if err == sql.ErrNoRows {
+    return &entities.Patient{}, nil
+  }
+  if err != nil {
+    return &entities.Patient{}, err
+  }
+
+  return patient, nil
 }
 

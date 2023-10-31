@@ -9,6 +9,7 @@ func handlePatientRoutes(router fiber.Router) {
   patientRouter := router.Group("/patients")
 
   patientRouter.Get("/", patient_controllers.GetAllPatients)
+  patientRouter.Get("/:patientId", patient_controllers.GetPatientById)
 }
 
 

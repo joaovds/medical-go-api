@@ -11,5 +11,10 @@ const (
   FROM
     patients
   `
+
+  GetPatientById = GetAllPatients + `
+  WHERE
+    id = $1
+  `
 )
 
