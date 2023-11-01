@@ -14,13 +14,13 @@ func GetAllPatients() ([]entities.Patient, error) {
   if err != nil {
     return nil, err
   }
+  defer db.Close() 
 
   patientsRows, err := db.Query(queries.GetAllPatients)
   if err != nil {
     return nil, err
   }
   defer patientsRows.Close()
-  defer db.Close() 
 
   var patients []entities.Patient = []entities.Patient{}
 
@@ -47,11 +47,11 @@ func GetAllPatients() ([]entities.Patient, error) {
 func GetPatientById(patientId string) (*entities.Patient, error) {
   db, err := postgres.GetConnection()
   if err != nil {
-    return &entities.Patient{}, err
+    return nil, err
   }
+  defer db.Close() 
 
   patientRow := db.QueryRow(queries.GetPatientById, patientId)
-  defer db.Close() 
 
   patient := new(entities.Patient)
 
@@ -63,12 +63,27 @@ func GetPatientById(patientId string) (*entities.Patient, error) {
     &patient.DateOfBirth,
     )
   if err == sql.ErrNoRows {
-    return &entities.Patient{}, nil
+    return nil, nil
   }
   if err != nil {
-    return &entities.Patient{}, err
+    return nil, err
   }
 
   return patient, nil
+}
+
+func DeletePatient(patientId string) error {
+  db, err := postgres.GetConnection()
+  if err != nil {
+    return err
+  }
+  defer db.Close() 
+
+  _, err = db.Exec(queries.DeletePatient, patientId)
+  if err != nil {
+    return err
+  }
+
+  return nil
 }
 

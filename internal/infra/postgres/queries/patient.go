@@ -16,5 +16,12 @@ const (
   WHERE
     id = $1
   `
+
+  DeletePatient = `
+  DELETE FROM
+    patients
+  WHERE
+    id = $1
+  `
 )
 

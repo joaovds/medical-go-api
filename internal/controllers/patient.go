@@ -12,7 +12,7 @@ func GetAllPatients(c *fiber.Ctx) error {
     return c.Status(fiber.StatusInternalServerError).JSON(err)
   }
 
-  return c.JSON(patients)
+  return c.Status(fiber.StatusOK).JSON(patients)
 }
 
 func GetPatientById(c *fiber.Ctx) error {
@@ -30,6 +30,24 @@ func GetPatientById(c *fiber.Ctx) error {
     return c.Status(fiber.StatusInternalServerError).JSON(err)
   }
 
-  return c.JSON(patient)
+  return c.Status(fiber.StatusNoContent).JSON(patient)
+}
+
+func DeletePatient(c *fiber.Ctx) error {
+  patientId := c.Params("patientId")
+  if patientId == "" {
+    return c.Status(fiber.StatusBadRequest).JSON(map[string]string{"error": "patientId is required"})
+  }
+
+  if !validation.IsValidUUID(patientId) {
+    return c.Status(fiber.StatusBadRequest).JSON(map[string]string{"error": "patientId is not a valid UUID"})
+  }
+
+  err := patient_services.DeletePatient(patientId)
+  if err != nil {
+    return c.Status(fiber.StatusInternalServerError).JSON(err)
+  }
+
+  return c.Status(fiber.StatusNoContent).JSON(nil)
 }
 
