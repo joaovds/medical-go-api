@@ -18,11 +18,11 @@ func GetAllPatients(c *fiber.Ctx) error {
 func GetPatientById(c *fiber.Ctx) error {
   patientId := c.Params("patientId")
   if patientId == "" {
-    return c.Status(fiber.StatusBadRequest).JSON("patientId is required")
+    return c.Status(fiber.StatusBadRequest).JSON(map[string]string{"error": "patientId is required"})
   }
 
   if !validation.IsValidUUID(patientId) {
-    return c.Status(fiber.StatusBadRequest).JSON("patientId is not a valid UUID")
+    return c.Status(fiber.StatusBadRequest).JSON(map[string]string{"error": "patientId is not a valid UUID"})
   }
 
   patient, err := patient_services.GetPatientById(patientId)
