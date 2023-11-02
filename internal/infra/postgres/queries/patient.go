@@ -39,5 +39,15 @@ const (
     document,
     birth_date
   `
+
+  UpdatePatient = `
+  UPDATE patients SET
+    name = $1,
+    email = $2,
+    document = $3,
+    birth_date = $4
+  WHERE
+    id = $5
+  `
 )
 

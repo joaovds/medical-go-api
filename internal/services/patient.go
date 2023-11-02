@@ -103,6 +103,28 @@ func CreatePatient(patient *entities.Patient) (*entities.Patient, error) {
   return createdPatient, nil
 }
 
+func UpdatePatient(patientId string, patient *entities.Patient) error {
+  db, err := postgres.GetConnection()
+  if err != nil {
+    return err
+  }
+  defer db.Close() 
+
+  _, err = db.Exec(
+    queries.UpdatePatient,
+    patient.Name,
+    patient.Email,
+    patient.Document,
+    patient.DateOfBirth,
+    patientId,
+  )
+  if err != nil {
+    return err
+  }
+
+  return nil
+}
+
 func DeletePatient(patientId string) error {
   db, err := postgres.GetConnection()
   if err != nil {

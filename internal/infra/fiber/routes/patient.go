@@ -13,6 +13,8 @@ func handlePatientRoutes(router fiber.Router) {
 
   patientRouter.Post("/", patient_controllers.CreatePatient)
 
+  patientRouter.Put("/:patientId", patient_controllers.UpdatePatient)
+
   patientRouter.Delete("/:patientId", patient_controllers.DeletePatient)
 }
 

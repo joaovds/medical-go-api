@@ -61,6 +61,38 @@ func CreatePatient(c *fiber.Ctx) error {
   return c.Status(fiber.StatusCreated).JSON(createdPatient)
 }
 
+func UpdatePatient(c *fiber.Ctx) error {
+  patientId := c.Params("patientId")
+  if patientId == "" {
+    return c.Status(fiber.StatusBadRequest).JSON(map[string]string{"error": "patientId is required"})
+  }
+
+  if !validation.IsValidUUID(patientId) {
+    return c.Status(fiber.StatusBadRequest).JSON(
+      map[string]string{
+        "error": "patientId is not a valid UUID",
+      },
+      )
+  }
+
+  patient := new(entities.Patient)
+
+  if err := c.BodyParser(patient); err != nil {
+    return c.Status(fiber.StatusBadRequest).JSON(
+      map[string]string{
+        "error": "invalid request body",
+      },
+    )
+  }
+
+  err := patient_services.UpdatePatient(patientId, patient)
+  if err != nil {
+    return c.Status(fiber.StatusInternalServerError).JSON(err)
+  }
+
+  return c.Status(fiber.StatusNoContent).JSON(nil)
+}
+
 func DeletePatient(c *fiber.Ctx) error {
   patientId := c.Params("patientId")
   if patientId == "" {
