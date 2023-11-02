@@ -23,5 +23,21 @@ const (
   WHERE
     id = $1
   `
+
+  CreatePatient = `
+  INSERT INTO patients (
+    name,
+    email,
+    document,
+    birth_date
+  ) VALUES
+    ($1, $2, $3, $4)
+  RETURNING
+    id,
+    name,
+    email,
+    document,
+    birth_date
+  `
 )
 

@@ -10,6 +10,9 @@ func handlePatientRoutes(router fiber.Router) {
 
   patientRouter.Get("/", patient_controllers.GetAllPatients)
   patientRouter.Get("/:patientId", patient_controllers.GetPatientById)
+
+  patientRouter.Post("/", patient_controllers.CreatePatient)
+
   patientRouter.Delete("/:patientId", patient_controllers.DeletePatient)
 }
 

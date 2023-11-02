@@ -72,6 +72,37 @@ func GetPatientById(patientId string) (*entities.Patient, error) {
   return patient, nil
 }
 
+func CreatePatient(patient *entities.Patient) (*entities.Patient, error) {
+  db, err := postgres.GetConnection()
+  if err != nil {
+    return nil, err
+  }
+  defer db.Close()
+
+  createdPatient := new(entities.Patient)
+
+  patientRow := db.QueryRow(
+    queries.CreatePatient,
+    patient.Name,
+    patient.Email,
+    patient.Document,
+    patient.DateOfBirth,
+  )
+
+  err = patientRow.Scan(
+    &createdPatient.Id,
+    &createdPatient.Name,
+    &createdPatient.Email,
+    &createdPatient.Document,
+    &createdPatient.DateOfBirth,
+  )
+  if err != nil {
+    return nil, err
+  }
+
+  return createdPatient, nil
+}
+
 func DeletePatient(patientId string) error {
   db, err := postgres.GetConnection()
   if err != nil {

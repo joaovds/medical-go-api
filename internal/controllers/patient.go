@@ -2,6 +2,7 @@ package patient_controllers
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/joaovds/first-go-api/internal/entities"
 	"github.com/joaovds/first-go-api/internal/services"
 	"github.com/joaovds/first-go-api/pkg/validation"
 )
@@ -22,7 +23,11 @@ func GetPatientById(c *fiber.Ctx) error {
   }
 
   if !validation.IsValidUUID(patientId) {
-    return c.Status(fiber.StatusBadRequest).JSON(map[string]string{"error": "patientId is not a valid UUID"})
+    return c.Status(fiber.StatusBadRequest).JSON(
+      map[string]string{
+        "error": "patientId is not a valid UUID",
+      },
+    )
   }
 
   patient, err := patient_services.GetPatientById(patientId)
@@ -30,7 +35,30 @@ func GetPatientById(c *fiber.Ctx) error {
     return c.Status(fiber.StatusInternalServerError).JSON(err)
   }
 
-  return c.Status(fiber.StatusNoContent).JSON(patient)
+  if patient == nil {
+    return c.Status(fiber.StatusNoContent).JSON(nil)
+  }
+
+  return c.Status(fiber.StatusOK).JSON(patient)
+}
+
+func CreatePatient(c *fiber.Ctx) error {
+  patient := new(entities.Patient)
+
+  if err := c.BodyParser(patient); err != nil {
+    return c.Status(fiber.StatusBadRequest).JSON(
+      map[string]string{
+        "error": "invalid request body",
+      },
+    )
+  }
+
+  createdPatient, err := patient_services.CreatePatient(patient)
+  if err != nil {
+    return c.Status(fiber.StatusInternalServerError).JSON(err)
+  }
+
+  return c.Status(fiber.StatusCreated).JSON(createdPatient)
 }
 
 func DeletePatient(c *fiber.Ctx) error {
