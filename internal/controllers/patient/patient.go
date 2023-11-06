@@ -3,7 +3,7 @@ package patient_controllers
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/joaovds/first-go-api/internal/entities"
-	"github.com/joaovds/first-go-api/internal/services"
+	patient_services "github.com/joaovds/first-go-api/internal/services/patient"
 	"github.com/joaovds/first-go-api/pkg/validation"
 )
 

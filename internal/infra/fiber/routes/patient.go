@@ -2,7 +2,7 @@ package routes
 
 import (
   "github.com/gofiber/fiber/v2"
-  patient_controllers "github.com/joaovds/first-go-api/internal/controllers"
+  patient_controllers "github.com/joaovds/first-go-api/internal/controllers/patient"
 )
 
 func handlePatientRoutes(router fiber.Router) {
@@ -17,5 +17,4 @@ func handlePatientRoutes(router fiber.Router) {
 
   patientRouter.Delete("/:patientId", patient_controllers.DeletePatient)
 }
-
 
