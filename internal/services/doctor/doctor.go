@@ -1,6 +1,7 @@
 package doctor_services
 
 import (
+	"database/sql"
 	"log"
 
 	"github.com/joaovds/first-go-api/internal/entities"
@@ -41,5 +42,33 @@ func GetAllDoctors() ([]entities.Doctor, error) {
   }
 
   return doctors, nil
+}
+
+func GetDoctorById(doctorId string) (*entities.Doctor, error) {
+  db, err := postgres.GetConnection()
+  if err != nil {
+    return nil, err
+  }
+  defer db.Close() 
+
+  doctorRow := db.QueryRow(queries.GetDoctorById, doctorId)
+
+  doctor := new(entities.Doctor)
+
+  err = doctorRow.Scan(
+    &doctor.Id,
+    &doctor.Name,
+    &doctor.Email,
+    &doctor.Password,
+    &doctor.Document,
+    )
+  if err == sql.ErrNoRows {
+    return nil, nil
+  }
+  if err != nil {
+    return nil, err
+  }
+
+  return doctor, nil
 }
 

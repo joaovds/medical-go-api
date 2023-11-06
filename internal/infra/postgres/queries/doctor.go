@@ -9,7 +9,12 @@ const (
     password,
     document
   FROM
-    doctors
+  doctors
+  `
+
+  GetDoctorById = GetAllDoctors + `
+  WHERE
+  id = $1
   `
 )
 
