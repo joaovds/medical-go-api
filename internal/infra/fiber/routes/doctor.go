@@ -12,5 +12,7 @@ func handleDoctorRoutes(router fiber.Router) {
   doctorRouter.Get("/:doctorId", doctor_controllers.GetDoctorById)
 
   doctorRouter.Post("/", doctor_controllers.CreateDoctor)
+
+  doctorRouter.Put("/:doctorId", doctor_controllers.UpdateDoctor)
 }
 

@@ -61,3 +61,35 @@ func CreateDoctor(c *fiber.Ctx) error {
   return c.Status(fiber.StatusCreated).JSON(createdDoctor)
 }
 
+func UpdateDoctor(c *fiber.Ctx) error {
+  doctorId := c.Params("doctorId")
+  if doctorId == "" {
+    return c.Status(fiber.StatusBadRequest).JSON(map[string]string{"error": "doctorId is required"})
+  }
+
+  if !validation.IsValidUUID(doctorId) {
+    return c.Status(fiber.StatusBadRequest).JSON(
+      map[string]string{
+        "error": "doctorId is not a valid UUID",
+      },
+      )
+  }
+
+  doctor := new(entities.Doctor)
+
+  if err := c.BodyParser(doctor); err != nil {
+    return c.Status(fiber.StatusBadRequest).JSON(
+      map[string]string{
+        "error": "invalid request body",
+      },
+    )
+  }
+
+  err := doctor_services.UpdateDoctor(doctorId, doctor)
+  if err != nil {
+    return c.Status(fiber.StatusInternalServerError).JSON(err)
+  }
+
+  return c.Status(fiber.StatusNoContent).JSON(nil)
+}
+

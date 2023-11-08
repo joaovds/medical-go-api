@@ -103,3 +103,25 @@ func CreateDoctor(doctor *entities.Doctor) (*entities.Doctor, error) {
   return createdDoctor, nil
 }
 
+func UpdateDoctor(doctorId string, doctor *entities.Doctor) error {
+  db, err := postgres.GetConnection()
+  if err != nil {
+    return err
+  }
+  defer db.Close() 
+
+  _, err = db.Exec(
+    queries.UpdateDoctor,
+    doctor.Name,
+    doctor.Email,
+    doctor.Password,
+    doctor.Document,
+    doctorId,
+  )
+  if err != nil {
+    return err
+  }
+
+  return nil
+}
+

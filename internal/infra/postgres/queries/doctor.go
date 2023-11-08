@@ -32,5 +32,15 @@ const (
     password,
     document
   `
+
+  UpdateDoctor = `
+  UPDATE doctors SET
+    name = $1,
+    email = $2,
+    password = $3,
+    document = $4
+  WHERE
+    id = $5
+  `
 )
 
