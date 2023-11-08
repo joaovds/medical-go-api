@@ -2,6 +2,7 @@ package doctor_controllers
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/joaovds/first-go-api/internal/entities"
 	doctor_services "github.com/joaovds/first-go-api/internal/services/doctor"
 	"github.com/joaovds/first-go-api/pkg/validation"
 )
@@ -39,5 +40,24 @@ func GetDoctorById(c *fiber.Ctx) error {
   }
 
   return c.Status(fiber.StatusOK).JSON(doctor)
+}
+
+func CreateDoctor(c *fiber.Ctx) error {
+  doctor := new(entities.Doctor)
+
+  if err := c.BodyParser(doctor); err != nil {
+    return c.Status(fiber.StatusBadRequest).JSON(
+      map[string]string{
+        "error": "invalid request body",
+      },
+    )
+  }
+
+  createdDoctor, err := doctor_services.CreateDoctor(doctor)
+  if err != nil {
+    return c.Status(fiber.StatusInternalServerError).JSON(err)
+  }
+
+  return c.Status(fiber.StatusCreated).JSON(createdDoctor)
 }
 
