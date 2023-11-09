@@ -14,5 +14,7 @@ func handleDoctorRoutes(router fiber.Router) {
   doctorRouter.Post("/", doctor_controllers.CreateDoctor)
 
   doctorRouter.Put("/:doctorId", doctor_controllers.UpdateDoctor)
+
+  doctorRouter.Delete("/:doctorId", doctor_controllers.DeleteDoctor)
 }
 

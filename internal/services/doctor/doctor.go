@@ -125,3 +125,19 @@ func UpdateDoctor(doctorId string, doctor *entities.Doctor) error {
   return nil
 }
 
+func DeleteDoctor(doctorId string) error {
+  db, err := postgres.GetConnection()
+  if err != nil {
+    return err
+  }
+  defer db.Close() 
+
+  _, err = db.Exec(queries.DeleteDoctor, doctorId)
+  if err != nil {
+    return err
+  }
+
+  return nil
+}
+
+
