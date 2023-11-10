@@ -22,3 +22,15 @@ CREATE TABLE IF NOT EXISTS "doctors" (
 	"updated_at" TIMESTAMP NOT NULL DEFAULT now()
 )
 
+CREATE TABLE IF NOT EXISTS "consultations" (
+  "id" UUID DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+  "doctorId" UUID NOT NULL REFERENCES doctors(id),
+  "patientId" UUID NOT NULL REFERENCES patients(id),
+  "date" TIMESTAMP NOT NULL,
+  "description" VARCHAR(250),
+  "notes" VARCHAR(500),
+  "diagnosis" VARCHAR(1024),
+  "created_at" TIMESTAMP NOT NULL DEFAULT now(),
+  "updated_at" TIMESTAMP NOT NULL DEFAULT now()
+)
+
