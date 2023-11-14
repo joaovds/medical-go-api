@@ -39,5 +39,10 @@ const (
   patients pat ON
       con."patientId" = pat."id"
   `
+
+  GetConsultationById = GetAllConsultations + `
+  WHERE
+    con."id" = $1
+  `
 )
 

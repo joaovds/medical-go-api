@@ -9,5 +9,6 @@ func handleConsultationRoutes(router fiber.Router) {
   consultationRouter := router.Group("/consultations")
 
   consultationRouter.Get("/", consultation_controllers.GetAllConsultations)
+  consultationRouter.Get("/:consultationId", consultation_controllers.GetConsultationById)
 }
 
