@@ -10,3 +10,7 @@ type Patient struct {
   DateOfBirth time.Time `json:"dateOfBirth"`
 }
 
+type CreatePatientRequest struct {
+  Patient
+}
+

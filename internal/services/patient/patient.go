@@ -72,7 +72,7 @@ func GetPatientById(patientId string) (*entities.Patient, error) {
   return patient, nil
 }
 
-func CreatePatient(patient *entities.Patient) (*entities.Patient, error) {
+func CreatePatient(patient *entities.CreatePatientRequest) (*entities.Patient, error) {
   db, err := postgres.GetConnection()
   if err != nil {
     return nil, err

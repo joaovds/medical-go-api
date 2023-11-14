@@ -8,3 +8,7 @@ type Doctor struct {
   Document string `json:"document"`
 }
 
+type CreateDoctorRequest struct {
+  Doctor
+}
+

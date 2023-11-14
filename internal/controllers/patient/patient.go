@@ -43,7 +43,7 @@ func GetPatientById(c *fiber.Ctx) error {
 }
 
 func CreatePatient(c *fiber.Ctx) error {
-  patient := new(entities.Patient)
+  patient := new(entities.CreatePatientRequest)
 
   if err := c.BodyParser(patient); err != nil {
     return c.Status(fiber.StatusBadRequest).JSON(

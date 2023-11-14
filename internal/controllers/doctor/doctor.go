@@ -43,7 +43,7 @@ func GetDoctorById(c *fiber.Ctx) error {
 }
 
 func CreateDoctor(c *fiber.Ctx) error {
-  doctor := new(entities.Doctor)
+  doctor := new(entities.CreateDoctorRequest)
 
   if err := c.BodyParser(doctor); err != nil {
     return c.Status(fiber.StatusBadRequest).JSON(
