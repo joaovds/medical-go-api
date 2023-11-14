@@ -9,5 +9,6 @@ func SetupRoutes(app *fiber.App) {
 
   handlePatientRoutes(apiV1)
   handleDoctorRoutes(apiV1)
+  handleConsultationRoutes(apiV1)
 }
 
