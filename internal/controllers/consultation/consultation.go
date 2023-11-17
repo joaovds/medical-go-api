@@ -2,6 +2,7 @@ package consultation_controllers
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/joaovds/first-go-api/internal/entities"
 	consultation_services "github.com/joaovds/first-go-api/internal/services/consultation"
 	"github.com/joaovds/first-go-api/pkg/validation"
 )
@@ -39,5 +40,29 @@ func GetConsultationById(c *fiber.Ctx) error {
   }
 
   return c.Status(fiber.StatusOK).JSON(consultation)
+}
+
+func CreateConsultation(c *fiber.Ctx) error {
+  consultation := new(entities.CreateConsultationRequest)
+
+  if err := c.BodyParser(consultation); err != nil {
+    return c.Status(fiber.StatusBadRequest).JSON(
+      map[string]string{
+        "error": "invalid request body",
+      },
+    )
+  }
+
+  if validationError := consultation.Validate(); validationError.Message != "" {
+    return c.Status(fiber.StatusBadRequest).JSON(validationError)
+  }
+
+  // createdConsultation, err := consultation.CreateConsultation(consultation)
+  // if err != nil {
+  //   return c.Status(fiber.StatusInternalServerError).JSON(err)
+  // }
+
+  // return c.Status(fiber.StatusCreated).JSON(createdConsultation)
+  return c.Status(fiber.StatusCreated).JSON(consultation)
 }
 

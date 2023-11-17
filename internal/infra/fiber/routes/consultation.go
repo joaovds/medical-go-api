@@ -10,5 +10,7 @@ func handleConsultationRoutes(router fiber.Router) {
 
   consultationRouter.Get("/", consultation_controllers.GetAllConsultations)
   consultationRouter.Get("/:consultationId", consultation_controllers.GetConsultationById)
+
+  consultationRouter.Post("/", consultation_controllers.CreateConsultation)
 }
 
