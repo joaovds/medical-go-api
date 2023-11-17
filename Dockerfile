@@ -8,7 +8,7 @@ COPY . .
 RUN go clean --modcache
 RUN GOOS=linux go build -o main cmd/main.go
 
-EXPOSE 4000
+EXPOSE 3333
 
 CMD ["/app/main"]
 

@@ -27,7 +27,7 @@ const (
           pat."email",
           'document',
           pat."document",
-          'birth_date',
+          'dateOfBirth',
           pat."birth_date"
       ) AS patient
   FROM
