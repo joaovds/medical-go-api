@@ -101,3 +101,23 @@ func GetConsultationById(consultationId string) (*entities.Consultation, error) 
   return consultation, nil
 }
 
+func CreateConsultation(consultation *entities.CreateConsultationRequest) error {
+  db, err := postgres.GetConnection()
+  if err != nil {
+    return err
+  }
+  defer db.Close()
+
+  _ = db.QueryRow(
+    queries.CreateConsultation,
+    consultation.Date,
+    consultation.Description,
+    consultation.Notes,
+    consultation.Diagnosis,
+    consultation.DoctorId,
+    consultation.PatientId,
+    )
+
+  return nil
+}
+

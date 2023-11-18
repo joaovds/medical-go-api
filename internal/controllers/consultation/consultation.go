@@ -57,12 +57,11 @@ func CreateConsultation(c *fiber.Ctx) error {
     return c.Status(fiber.StatusBadRequest).JSON(validationError)
   }
 
-  // createdConsultation, err := consultation.CreateConsultation(consultation)
-  // if err != nil {
-  //   return c.Status(fiber.StatusInternalServerError).JSON(err)
-  // }
+  err := consultation_services.CreateConsultation(consultation)
+  if err != nil {
+    return c.Status(fiber.StatusInternalServerError).JSON(err)
+  }
 
-  // return c.Status(fiber.StatusCreated).JSON(createdConsultation)
-  return c.Status(fiber.StatusCreated).JSON(consultation)
+  return c.Status(fiber.StatusCreated).JSON(nil)
 }
 

@@ -44,5 +44,17 @@ const (
   WHERE
     con."id" = $1
   `
+
+  CreateConsultation = `
+  INSERT INTO consultations (
+    date,
+    description,
+    notes,
+    diagnosis,
+    doctorId,
+    patientId,
+  ) VALUES
+    ($1, $2, $3, $4, $5, $6)
+  `
 )
 

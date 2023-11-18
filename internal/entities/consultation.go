@@ -18,7 +18,7 @@ type Consultation struct {
 }
 
 type CreateConsultationRequest struct {
-	Date        time.Time `json:"date"`
+	Date        string    `json:"date"`
 	Description string    `json:"description"`
   Notes       string    `json:"notes"`
   Diagnosis   string    `json:"diagnosis"`
@@ -27,11 +27,16 @@ type CreateConsultationRequest struct {
 }
 
 func (c *CreateConsultationRequest) Validate() ValidationError {
-  if c.Date.IsZero() {
+  if c.Date == "" {
     return ValidationError{Message: "date is required"}
   }
 
-  if c.Date.Before(time.Now()) {
+  parseDate, err := time.Parse("2006-01-02 15:04:05", c.Date)
+  if err != nil {
+    return ValidationError{Message: "date must be in the format YYYY-MM-DD HH:MM:SS"}
+  }
+
+  if parseDate.Before(time.Now()) {
     fmt.Println(time.Now())
     return ValidationError{Message: "date must be a valid date and greater than today"}
   }
