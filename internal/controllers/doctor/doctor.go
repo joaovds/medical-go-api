@@ -50,7 +50,11 @@ func CreateDoctor(c *fiber.Ctx) error {
       map[string]string{
         "error": "invalid request body",
       },
-    )
+      )
+  }
+
+  if validationError := doctor.Validate(); validationError.Message != "" {
+    return c.Status(fiber.StatusBadRequest).JSON(validationError)
   }
 
   createdDoctor, err := doctor_services.CreateDoctor(doctor)
