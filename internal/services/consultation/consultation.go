@@ -3,6 +3,7 @@ package consultation_services
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"log"
 
 	"github.com/joaovds/first-go-api/internal/entities"
@@ -108,7 +109,9 @@ func CreateConsultation(consultation *entities.CreateConsultationRequest) error 
   }
   defer db.Close()
 
-  _ = db.QueryRow(
+  fmt.Println(consultation)
+
+  createdConsultation := db.QueryRow(
     queries.CreateConsultation,
     consultation.Date,
     consultation.Description,
@@ -117,6 +120,12 @@ func CreateConsultation(consultation *entities.CreateConsultationRequest) error 
     consultation.DoctorId,
     consultation.PatientId,
     )
+
+  err = createdConsultation.Err();
+  if err != nil {
+    log.Println(err)
+    return fmt.Errorf("Error creating consultation")
+  }
 
   return nil
 }

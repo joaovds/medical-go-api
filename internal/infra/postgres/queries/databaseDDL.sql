@@ -24,8 +24,8 @@ CREATE TABLE IF NOT EXISTS "doctors" (
 
 CREATE TABLE IF NOT EXISTS "consultations" (
   "id" UUID DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
-  "doctorId" UUID NOT NULL REFERENCES doctors(id),
-  "patientId" UUID NOT NULL REFERENCES patients(id),
+  "doctor_id" UUID NOT NULL REFERENCES doctors(id),
+  "patient_id" UUID NOT NULL REFERENCES patients(id),
   "date" TIMESTAMP NOT NULL,
   "description" VARCHAR(250),
   "notes" VARCHAR(500),

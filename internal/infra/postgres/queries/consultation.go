@@ -34,10 +34,10 @@ const (
       consultations con
   INNER JOIN
   doctors doc ON
-      con."doctorId" = doc."id"
+      con."doctor_id" = doc."id"
   INNER JOIN
   patients pat ON
-      con."patientId" = pat."id"
+      con."patient_id" = pat."id"
   `
 
   GetConsultationById = GetAllConsultations + `
@@ -51,8 +51,8 @@ const (
     description,
     notes,
     diagnosis,
-    doctorId,
-    patientId,
+    doctor_id,
+    patient_id
   ) VALUES
     ($1, $2, $3, $4, $5, $6)
   `

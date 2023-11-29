@@ -59,7 +59,7 @@ func CreateConsultation(c *fiber.Ctx) error {
 
   err := consultation_services.CreateConsultation(consultation)
   if err != nil {
-    return c.Status(fiber.StatusInternalServerError).JSON(err)
+    return c.Status(fiber.StatusInternalServerError).JSON(err.Error())
   }
 
   return c.Status(fiber.StatusCreated).JSON(nil)
