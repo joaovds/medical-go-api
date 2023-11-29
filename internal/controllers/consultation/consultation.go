@@ -65,6 +65,38 @@ func CreateConsultation(c *fiber.Ctx) error {
   return c.Status(fiber.StatusCreated).JSON(nil)
 }
 
+func UpdateConsultation(c *fiber.Ctx) error {
+  consultationId := c.Params("consultationId")
+  if consultationId == "" {
+    return c.Status(fiber.StatusBadRequest).JSON(map[string]string{"error": "consultationId is required"})
+  }
+
+  if !validation.IsValidUUID(consultationId) {
+    return c.Status(fiber.StatusBadRequest).JSON(
+      map[string]string{
+        "error": "consultationId is not a valid UUID",
+      },
+      )
+  }
+
+  consultation := new(entities.UpdateConsultationRequest)
+
+  if err := c.BodyParser(consultation); err != nil {
+    return c.Status(fiber.StatusBadRequest).JSON(
+      map[string]string{
+        "error": "invalid request body",
+      },
+    )
+  }
+
+  err := consultation_services.UpdateConsultation(consultationId, consultation)
+  if err != nil {
+    return c.Status(fiber.StatusInternalServerError).JSON(err)
+  }
+
+  return c.Status(fiber.StatusNoContent).JSON(nil)
+}
+
 func DeleteConsultation(c *fiber.Ctx) error {
   consultationId := c.Params("consultationId")
   if consultationId == "" {

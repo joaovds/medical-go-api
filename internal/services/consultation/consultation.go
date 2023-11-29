@@ -130,6 +130,30 @@ func CreateConsultation(consultation *entities.CreateConsultationRequest) error 
   return nil
 }
 
+func UpdateConsultation(consultationId string, consultation *entities.UpdateConsultationRequest) error {
+  db, err := postgres.GetConnection()
+  if err != nil {
+    return err
+  }
+  defer db.Close() 
+
+  _, err = db.Exec(
+    queries.UpdateConsultation,
+    consultation.Date,
+    consultation.Description,
+    consultation.Notes,
+    consultation.Diagnosis,
+    consultation.DoctorId,
+    consultation.PatientId,
+    consultationId,
+    )
+  if err != nil {
+    return err
+  }
+
+  return nil
+}
+
 func DeleteConsultation(consultationId string) error {
   db, err := postgres.GetConnection()
   if err != nil {

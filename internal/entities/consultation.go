@@ -26,6 +26,10 @@ type CreateConsultationRequest struct {
   PatientId   string    `json:"patientId"`
 }
 
+type UpdateConsultationRequest struct {
+  CreateConsultationRequest
+}
+
 func (c *CreateConsultationRequest) Validate() ValidationError {
   if c.Date == "" {
     return ValidationError{Message: "date is required"}

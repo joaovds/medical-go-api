@@ -13,6 +13,8 @@ func handleConsultationRoutes(router fiber.Router) {
 
   consultationRouter.Post("/", consultation_controllers.CreateConsultation)
 
+  consultationRouter.Put("/:consultationId", consultation_controllers.UpdateConsultation)
+
   consultationRouter.Delete("/:consultationId", consultation_controllers.DeleteConsultation)
 }
 

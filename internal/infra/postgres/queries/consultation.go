@@ -57,6 +57,18 @@ const (
     ($1, $2, $3, $4, $5, $6)
   `
 
+  UpdateConsultation = `
+  UPDATE consultations SET
+    date = $1,
+    description = $2,
+    notes = $3,
+    diagnosis = $4,
+    doctor_id = $5,
+    patient_id = $6
+  WHERE
+    id = $7
+  `
+
   DeleteConsultation = `
   DELETE FROM
     consultations
