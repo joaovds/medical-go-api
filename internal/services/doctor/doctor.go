@@ -140,4 +140,3 @@ func DeleteDoctor(doctorId string) error {
   return nil
 }
 
-
